@@ -46,7 +46,7 @@ func StringSum(input string) (output string, err error) {
 	ops := strings.Split(input, "+")
 
 	if len(ops) != 2 {
-		return "", fmt.Errorf("%w ", errorNotTwoOperands)
+		return "", nil
 	}
 
 	summ := 0
