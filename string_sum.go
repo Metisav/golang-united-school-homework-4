@@ -3,6 +3,7 @@ package string_sum
 import (
 	"errors"
 	"fmt"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -43,16 +44,18 @@ func StringSum(input string) (output string, err error) {
 	}
 
 	input = strings.TrimSpace(input)
-	ops := strings.Split(input, "+")
 
-	if len(ops) != 2 {
-		return "", nil
+	r := regexp.MustCompile(`[+-]?\d+[^+-]`)
+	matches := r.FindAllString(input, -1)
+
+	if len(matches) != 2 {
+		return "", fmt.Errorf("%w ", errorNotTwoOperands)
 	}
 
 	summ := 0
-	for _, op := range ops {
-		op, _ := strconv.Atoi(op)
-		summ += op
+	for _, v := range matches {
+		num, _ := strconv.Atoi(v)
+		summ += num
 	}
 
 	return strconv.Itoa(summ), nil
